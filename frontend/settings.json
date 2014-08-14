@@ -1,0 +1,4 @@
+{
+    "default_workspace": "../SA_mini_games",
+    "ignore_directories": [ "_launcher", ".git" ]
+}

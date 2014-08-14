@@ -1,0 +1,21 @@
+extends layout
+block content
+    h1= title
+    table
+        each val, key in list
+            tr
+                td
+                    b
+                        a(href=val.urlscheme)=key
+                td
+                    a(href=val.preview) webpreview
+                td
+                    a(href=val.doc) doc
+                td
+                    a(href=val.force) doc更新
+            tr
+                td(colspan="4" style="text-indent:1em")=val.url
+
+    div(id="qr")
+        !{qr}
+

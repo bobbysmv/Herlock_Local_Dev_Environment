@@ -1,0 +1,89 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    style.
+       html,body { margin: 0; padding: 0; border:0 }
+    script(src='http://bobbysmv.github.io/Herlock.js-for-Web/lib/require.js', charset='UTF-8')
+
+
+  body
+    script.
+        require({ 
+            baseUrl: "http://bobbysmv.github.io/Herlock.js-for-Web/" ,
+            paths: { herlock:"./", lib:"./lib", src:"./src" } 
+        });
+        require([ "Player" ], function( Player ) {
+
+            // params
+            var params = (function(){
+                var tmp = location.search.split("?")[1];
+                var result = {};
+                if( !tmp ) return result;
+                tmp.split("&").forEach(function(v){var w=v.split("=");result[w[0]]=w[1];});
+                return result;
+            })();
+
+            // options
+            var mainJsURL = "/"+params.proj + "/main.js";
+            var options = params;
+            options.width = options.width || options.w || 640;
+            options.height = options.height || options.h || 960;
+
+            // container
+            options.container = document.createElement("div");
+            document.body.appendChild( options.container );
+
+            // player
+            var player = new Player( mainJsURL, options );
+
+            // clear requirejs
+            window.requirejs = undefined;
+            window.require = undefined;
+            window.define = undefined;
+
+
+            if( options.useViewCSS || options.useViewCanvas ) {
+                // 蜿悶ｊ諤･縺弱せ繝槭�蜷代￠
+                // screen.availHeight?
+
+
+                // scroll遖∵ｭ｢
+                options.container.style.overflow = "hidden";
+                document.body.style.overflow = "hidden";
+
+                return;
+            }
+
+            // adjust container size
+            adjustContainerSize();
+            window.addEventListener("resize", adjustContainerSize);
+            function adjustContainerSize() {
+                var container = options.container;
+                container.style.transformOrigin = "0 0";
+
+                var measure = document.createElement("div");
+                measure.setStyle = function(params){ for(var k in params)this.style[k]=params[k]; };
+                measure.setStyle({position:"absolute",top:0,bottom:0,left:0,right:0});
+
+                document.body.appendChild(measure);
+                var layerWidth = measure.clientWidth;
+                var layerHeight = measure.clientHeight;
+                var layerAspectRatio = layerWidth / layerHeight;
+                document.body.removeChild(measure);
+
+                var contentWidth = options.width;
+                var contentHeight = options.height;
+                var contentAspectRatio = contentWidth / contentHeight;
+
+                // 逕ｻ髱｢蜀�↓蜿弱∪繧九ｈ縺�↓
+                var scale;
+                if( layerAspectRatio < contentAspectRatio )
+                    scale = layerWidth / contentWidth;// 豌ｴ蟷ｳ蟷�ｒ縺ゅｏ縺帙ｋ
+                else
+                    scale = layerHeight / contentHeight;// 蝙ら峩蟷�ｒ縺ゅｏ縺帙ｋ
+
+                container.style.transform = "scale("+scale+","+scale+")";
+            }
+        });

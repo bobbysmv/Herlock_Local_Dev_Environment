@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	h1= title
+	p
+		//a(href="/upload/stg")
+			ステージング環境Zipアップロード
+	p
+		//a(href="/upload/prod")
+			本番環境Zipアップロード
+	p
+		a(href="/list") projects
+	p
+		a(href="#{orion}" target="_blank") editor
+	p
+		a(href="http://bobbysmv.github.io/herlock_inspector/?host=...") inspector
+	p
+		a(href="http://www.testflightapp.com") testflight
+	p
+		a(href="http://bitbucket.org") bitbucket

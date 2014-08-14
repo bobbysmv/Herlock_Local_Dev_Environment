@@ -1,0 +1,27 @@
+* {
+  line-height: 200%;
+}
+
+h1 {
+    font-size: 160%;
+}
+
+body {
+  padding: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+li {
+    border-bottom: #eeeeee 1px solid;
+    line-height: 160%;
+}
+
+table {
+    width: 100%;
+}
+tr:nth-child(even) {background: #f5f5f5}
+tr:nth-child(odd) {background: #FFF}
