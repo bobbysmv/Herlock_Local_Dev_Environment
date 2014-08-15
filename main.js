@@ -20,6 +20,5 @@ console.log(util.format('Listening on port %d...', 8081));
 var orionMiddleware = orion(orionOptions);
 var appContext = orionMiddleware.appContext;
 var server = connect()
-	.use(connect.compress())
 	.use(orionMiddleware)
 	.listen( 8081 );
