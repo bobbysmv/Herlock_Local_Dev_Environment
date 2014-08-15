@@ -26,3 +26,5 @@ Sample.prototype = {
 var s = new Sample("test");
 s.log("aaa");
 
+
+

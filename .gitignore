@@ -1,3 +1,5 @@
 node_modules
 projects
+.metadata
 .DS_Store
+.idea
