@@ -44,14 +44,13 @@ exports.index = function(req, res){
         gen( target, out, function( result, err ){
             if(!result) {
                 console.log("Error ", err);
-                throw "失敗しました。" + err;
+//                throw "失敗しました。" + err;
+                return res.send( "<h1>Document生成に失敗しました。</h1><a href=\"\">retry</a><pre>"+ (""+err).replace("\n","<br>") + "</pre>" );
             }
             return res.redirect( "/docs/"+proj );
         });
 
     } ).exec();
-
-
 };
 
 function gen(target, out, callback) {
@@ -59,7 +58,10 @@ function gen(target, out, callback) {
     function gendoc( target, out ) {
 
         //
-        child_process.exec("jsduck " + target + " -o " + out, { maxBuffer: 1024 * 1024 }, function( err ){
+        var title = (function(){ return this[ this.length-1 ]; }).call(target.split("/"));
+        var command = "jsduck " + target + " -o " + out + " --exclude "+target+"/test --title=" + title;
+        console.log( command );
+        child_process.exec( command, { maxBuffer: 1024 * 1024 }, function( err ){
             if(err !== null) {
                 return callback( false, err );
             }

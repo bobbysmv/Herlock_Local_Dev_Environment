@@ -32,7 +32,8 @@ $ node ./
 - ブラウザUIの提供
 
 - 確認環境（開発アプリ・webpreview）がローカルソースを参照するのに使用
-#### web preview
+
+#### web preview
 
 - HerlockのHTML5プレーヤーを使いpreviewする。
 
@@ -41,7 +42,8 @@ $ node ./
 #### javascript documentor
 
 - project毎にjsソースからドキュメントを生成する。
-- jsduckを利用
+
+- jsduck(5.1.0以上)を利用
 
 #### 開発用アプリInspector
 
