@@ -4,17 +4,12 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     style.
-       html,body { margin: 0; padding: 0; border:0; overflow:hidden; }
-    script(src='http://bobbysmv.github.io/Herlock.js-for-Web/lib/require.js', charset='UTF-8')
-
+       html,body { margin: 0; padding: 0; border:0 }
+    script(src='http://bobbysmv.github.io/Herlock.js-for-Web/built/herlock.js', charset='UTF-8')
 
   body
     script.
-        require({ 
-            baseUrl: "http://bobbysmv.github.io/Herlock.js-for-Web/" ,
-            paths: { herlock:"./", lib:"./lib", src:"./src" } 
-        });
-        require([ "Player" ], function( Player ) {
+        herlock.require([ "Player" ],function( Player ) {
 
             // params
             var params = (function(){
@@ -26,7 +21,7 @@ html
             })();
 
             // options
-            var mainJsURL = "/"+params.proj + "/main.js";
+            var mainJsURL = params.proj? params.proj+"/main.js": null;
             var options = params;
             options.width = options.width || options.w || 640;
             options.height = options.height || options.h || 960;
@@ -36,23 +31,15 @@ html
             document.body.appendChild( options.container );
 
             // player
-            var player = new Player( mainJsURL, options );
-
-            // clear requirejs
-            window.requirejs = undefined;
-            window.require = undefined;
-            window.define = undefined;
+            player = new Player( mainJsURL, options );
 
 
             if( options.useViewCSS || options.useViewCanvas ) {
-                // 蜿悶ｊ諤･縺弱せ繝槭�蜷代￠
+                // 取り急ぎスマホ向け
                 // screen.availHeight?
-
-
-                // scroll遖∵ｭ｢
+                // scroll禁止
                 options.container.style.overflow = "hidden";
                 document.body.style.overflow = "hidden";
-
                 return;
             }
 
@@ -77,12 +64,12 @@ html
                 var contentHeight = options.height;
                 var contentAspectRatio = contentWidth / contentHeight;
 
-                // 逕ｻ髱｢蜀�↓蜿弱∪繧九ｈ縺�↓
+                // 画面内に収まるように
                 var scale;
                 if( layerAspectRatio < contentAspectRatio )
-                    scale = layerWidth / contentWidth;// 豌ｴ蟷ｳ蟷�ｒ縺ゅｏ縺帙ｋ
+                    scale = layerWidth / contentWidth;// 水平幅をあわせる
                 else
-                    scale = layerHeight / contentHeight;// 蝙ら峩蟷�ｒ縺ゅｏ縺帙ｋ
+                    scale = layerHeight / contentHeight;// 垂直幅をあわせる
 
                 container.style.transform = "scale("+scale+","+scale+")";
             }
